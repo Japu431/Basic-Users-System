@@ -1,6 +1,7 @@
 {
   "name": "basic-user-system",
   "version": "1.0.0",
+  "type": "commonjs",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3"
   },
