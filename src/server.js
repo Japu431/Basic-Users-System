@@ -9,8 +9,8 @@ const userSignUp = require("./routes/RotaUsuarioCadastrar");
 
 app.use(bodyParser.json());
 
-app.use("/login", userSignIn);
-app.use("/", userSignUp);
+app.use("/login", express.json(), userSignIn);
+app.use("/", express.json(), userSignUp);
 
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;

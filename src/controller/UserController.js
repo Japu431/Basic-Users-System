@@ -10,7 +10,7 @@ const userController = {
 
     const { error } = registerValidate(req.body);
     if (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
     const selectedUser = await User.findOne({ email: email });
 
@@ -29,7 +29,7 @@ const userController = {
       res.status(200).json(savedUser);
     } catch (err) {
       console.log(err);
-      res.status(400).send(err);
+      res.status(400).json(err);
     }
   },
 
@@ -37,7 +37,7 @@ const userController = {
     const { error } = loginValidate(req.body);
 
     if (error) {
-      return res.status(400).send(error);
+      return res.status(400).json(error);
     }
     const selectedUser = await User.findOne({ email: req.body.email });
 
@@ -57,6 +57,15 @@ const userController = {
 
     res.header("authoriztion-token", token);
     res.send("Usuario logado");
+  },
+
+  users: async (req, res) => {
+    try {
+      const users = await User.find();
+      res.status(200).json(users);
+    } catch (error) {
+      res.status(500).json({ message: `Deu erro no sistema!! ${error}` });
+    }
   },
 };
 
