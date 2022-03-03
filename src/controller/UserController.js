@@ -7,8 +7,8 @@ const { loginValidate, registerValidate } = require("./validate");
 const userController = {
   register: async function (req, res) {
     const { name, email, password } = req.body;
-
     const { error } = registerValidate(req.body);
+
     if (error) {
       return res.status(400).json(error);
     }
@@ -35,28 +35,25 @@ const userController = {
 
   login: async (req, res) => {
     const { error } = loginValidate(req.body);
-
     if (error) {
-      return res.status(400).json(error);
+      return res.status(400).json("Erro>: " + error);
     }
     const selectedUser = await User.findOne({ email: req.body.email });
-
     if (!selectedUser) {
-      return res.status(400).send("Email ou Senha Incorretas");
+      return res.status(400).json({ message: "email not exists!" });
     }
-    const passwordAndUserMatch = bcrypt.compareSync(req.body.password);
+    const salt = await bcrypt.genSaltSync(10);
+    const password = await req.body.password;
+    const findPassword = bcrypt.compareSync(password, salt);
 
-    if (!passwordAndUserMatch) {
-      return res.status(400).send("Email ou Senha Incorretas");
+    if (!findPassword) {
+      return res.status(400).json("Senha Incorreta!");
     }
 
-    const token = jwt.sign(
-      { _id: selectedUser._id, admin: selected_user._id },
-      process.env.TOKEN_SECRET
-    );
+    const token = jwt.sign({ _id: selectedUser._id });
 
     res.header("authoriztion-token", token);
-    res.send("Usuario logado");
+    res.json("Usuario logado");
   },
 
   users: async (req, res) => {

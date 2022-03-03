@@ -1,7 +1,8 @@
 const express = require("express");
 const routes = express.Router();
+const auth = require("../controller/authController");
 
-routes.get("/", (req, res) => {
+routes.get("/", auth, (req, res) => {
   if (req.body.admin) {
     res.send("Só os admins podem ver esses dados!");
   } else {
@@ -9,5 +10,8 @@ routes.get("/", (req, res) => {
   }
 });
 
+routes.get("/free", auth, (req, res) => {
+  res.send("Esse dado só deve ser visto por quem está logado");
+});
 
-module.exports = routes;  
+module.exports = routes;

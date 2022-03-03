@@ -4,13 +4,10 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const userSignIn = require("./routes/RotaUsuarioLogin");
-const userSignUp = require("./routes/RotaUsuarioCadastrar");
+const routes = require("./routes/RotaUsuarios");
 
 app.use(bodyParser.json());
-
-app.use("/login", express.json(), userSignIn);
-app.use("/", express.json(), userSignUp);
+app.use("/", express.json(), routes);
 
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
